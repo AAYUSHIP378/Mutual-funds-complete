@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+.env
+data/raw/Bluestock_MF_Capstone_Project.csv
