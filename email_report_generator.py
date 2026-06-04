@@ -1,0 +1,188 @@
+"""Day 8 Bonus Challenge 5: Automated HTML Email Report Generator
+
+Generates weekly performance summary as HTML email template.
+"""
+
+from pathlib import Path
+from datetime import datetime, timedelta
+import pandas as pd
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import smtplib
+
+BASE_DIR = Path(__file__).resolve().parent
+PROCESSED_DIR = BASE_DIR / "data" / "processed"
+
+def generate_email_html():
+    """Generate HTML email report for weekly performance summary"""
+    
+    # Load data
+    nav = pd.read_csv(PROCESSED_DIR / "02_nav_history.csv", parse_dates=["date"])
+    perf = pd.read_csv(PROCESSED_DIR / "07_scheme_performance.csv")
+    
+    # Get top/bottom performers
+    top_5 = perf.nlargest(5, "sharpe_ratio")[["scheme_name", "fund_house", "sharpe_ratio", "return_3yr_pct"]]
+    bottom_5 = perf.nsmallest(5, "sharpe_ratio")[["scheme_name", "fund_house", "sharpe_ratio", "return_3yr_pct"]]
+    highest_return = perf.nlargest(5, "return_3yr_pct")[["scheme_name", "fund_house", "return_3yr_pct", "std_dev_ann_pct"]]
+    
+    # Generate HTML
+    html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {{ font-family: Arial, sans-serif; background-color: #f5f5f5; }}
+            .container {{ max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }}
+            .header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }}
+            .section {{ margin-bottom: 30px; }}
+            .section-title {{ font-size: 18px; font-weight: bold; color: #333; border-bottom: 2px solid #667eea; padding-bottom: 10px; }}
+            table {{ width: 100%; border-collapse: collapse; margin-top: 10px; }}
+            th {{ background-color: #667eea; color: white; padding: 10px; text-align: left; }}
+            td {{ padding: 10px; border-bottom: 1px solid #ddd; }}
+            tr:hover {{ background-color: #f9f9f9; }}
+            .metric {{ display: inline-block; margin-right: 30px; }}
+            .metric-value {{ font-size: 24px; font-weight: bold; color: #667eea; }}
+            .metric-label {{ font-size: 12px; color: #999; }}
+            .footer {{ font-size: 12px; color: #999; margin-top: 30px; border-top: 1px solid #ddd; padding-top: 20px; }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Bluestock Mutual Fund Analytics</h1>
+                <p>Weekly Performance Summary</p>
+                <p style="font-size: 12px;">Week of {datetime.now().strftime("%B %d, %Y")}</p>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Key Metrics</div>
+                <div class="metric">
+                    <div class="metric-label">Total Funds Tracked</div>
+                    <div class="metric-value">{len(perf)}</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Average Sharpe Ratio</div>
+                    <div class="metric-value">{perf['sharpe_ratio'].mean():.2f}</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Avg 3Y Return</div>
+                    <div class="metric-value">{perf['return_3yr_pct'].mean():.2f}%</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Top 5 Performers (by Sharpe Ratio)</div>
+                <table>
+                    <tr>
+                        <th>Fund Name</th>
+                        <th>Fund House</th>
+                        <th>Sharpe Ratio</th>
+                        <th>3Y Return</th>
+                    </tr>
+                    {generate_table_rows(top_5)}
+                </table>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Highest 3Y Returns</div>
+                <table>
+                    <tr>
+                        <th>Fund Name</th>
+                        <th>Fund House</th>
+                        <th>3Y Return</th>
+                        <th>Volatility</th>
+                    </tr>
+                    {generate_return_table_rows(highest_return)}
+                </table>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Bottom 5 Performers (by Sharpe Ratio)</div>
+                <table>
+                    <tr>
+                        <th>Fund Name</th>
+                        <th>Fund House</th>
+                        <th>Sharpe Ratio</th>
+                        <th>3Y Return</th>
+                    </tr>
+                    {generate_table_rows(bottom_5)}
+                </table>
+            </div>
+            
+            <div class="footer">
+                <p>This is an automated report generated by Bluestock MF Analytics.</p>
+                <p>Do not reply to this email. For questions, contact analytics@bluestock.com</p>
+                <p>Dashboard: <a href="http://localhost:8501">Streamlit Dashboard</a></p>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+    
+    return html
+
+def generate_table_rows(df):
+    """Convert DataFrame to HTML table rows"""
+    rows = ""
+    for _, row in df.iterrows():
+        rows += f"""
+        <tr>
+            <td>{row['scheme_name']}</td>
+            <td>{row['fund_house']}</td>
+            <td>{row['sharpe_ratio']:.2f}</td>
+            <td>{row['return_3yr_pct']:.2f}%</td>
+        </tr>
+        """
+    return rows
+
+def generate_return_table_rows(df):
+    """Convert return DataFrame to HTML table rows"""
+    rows = ""
+    for _, row in df.iterrows():
+        rows += f"""
+        <tr>
+            <td>{row['scheme_name']}</td>
+            <td>{row['fund_house']}</td>
+            <td>{row['return_3yr_pct']:.2f}%</td>
+            <td>{row['std_dev_ann_pct']:.2f}%</td>
+        </tr>
+        """
+    return rows
+
+def send_email(recipient_email, smtp_server, smtp_port, sender_email, sender_password):
+    """Send email report (requires SMTP configuration)"""
+    html_content = generate_email_html()
+    
+    # Create message
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = f"Weekly MF Performance Report - {datetime.now().strftime('%Y-%m-%d')}"
+    msg["From"] = sender_email
+    msg["To"] = recipient_email
+    
+    msg.attach(MIMEText(html_content, "html"))
+    
+    # Send email
+    try:
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, recipient_email, msg.as_string())
+        server.quit()
+        print(f"Email sent to {recipient_email}")
+    except Exception as e:
+        print(f"Failed to send email: {str(e)}")
+
+if __name__ == "__main__":
+    # Generate HTML report
+    html_report = generate_email_html()
+    
+    # Save as HTML file
+    output_file = BASE_DIR / "weekly_performance_report.html"
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write(html_report)
+    
+    print(f"HTML report saved: {output_file}")
+    print("\nTo send via email, configure SMTP settings and call:")
+    print("send_email('your_email@example.com', 'smtp.gmail.com', 587, 'sender@gmail.com', 'app_password')")
+    
+    # Example (commented out - requires credentials):
+    # send_email('recipient@example.com', 'smtp.gmail.com', 587, 'your_email@gmail.com', 'your_app_password')
