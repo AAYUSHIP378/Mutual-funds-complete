@@ -4,3 +4,9 @@ __pycache__/
 *.pyc
 .env
 data/raw/Bluestock_MF_Capstone_Project.csv
+
+# Generated data and database
+data/processed/
+bluestock_mf.db
+figures/
+dashboard/figures/

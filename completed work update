@@ -1,0 +1,90 @@
+day 3 task completed 
+NAV trend analysis for all 40 schemes (2022–2026) with 2023 bull run and 2024 correction highlights
+AUM growth grouped bar chart by fund house for 2022–2025, with SBI dominance highlighted
+SIP inflow monthly trend and all-time high annotation
+Category inflow heatmap
+Investor demographics: age pie, SIP box plot, gender split
+Geographic charts: SIP amount by state,
+T30 vs B30 pie
+Folio count growth line with milestones
+NAV return correlation heatmap for top 10 funds
+Sector allocation donut from portfolio holdings
+Additional charts for top 10 3-year returns and category inflow trends
+
+standup notes
+Completed the EDA visualization task for Day 3.
+Generated the EDA_Analysis.ipynb notebook.
+Exported chart PNGs to figures.
+Created a focused T30 vs B30 city tier pie chart.
+Used SIP transaction data to compute city tier shares.
+Visualized investor concentration in T30 versus B30 cities.
+Found SIP volume split across city tiers clearly.
+Created a folio count growth line chart.
+Plotted folio growth from Jan 2022 to Dec 2025.
+Marked the key milestone at 13.26 Cr folios in Jan 2022.
+Marked the key milestone at 26.12 Cr folios in Dec 2025.
+The folio growth line shows sustained industry expansion.
+Created NAV return correlation heatmap for 10 funds.
+Selected top 10 funds by AUM for return correlation.
+Calculated daily NAV returns and pairwise correlations.
+Heatmap reveals strong co-movement among large-cap funds.
+Identified lower correlations for differentiated sector funds.
+Created a sector allocation donut chart.
+Aggregated portfolio weights across holdings data.
+Visualized sector mix as a donut for verall asset allocation.
+The donut highlights concentration in top sectors.
+Created top 10 funds by 3-year return bar chart.
+Highlighted schemes with strongest 3-year performance.
+This shows which funds delivered the best multi-year gains.
+Created category inflow trend line chart.
+Plotted category net inflow by month for 2022–2025.
+Revealed which fund categories led retail cash flow.
+The trend chart highlights category rotation over time.
+Generated 15+ EDA charts across NAV, AUM, SIP, demographics, and holdings.
+Completed final report-ready visual assets required for presentation.
+
+
+day 4 task 
+ay 4 Standup Notes (30 points)
+Day 4 performance analytics task started and completed.
+Built Performance_Analytics.ipynb for fund-level analytics.
+Computed daily NAV returns for all 40 schemes.
+Validated daily return distribution for reasonableness.
+Calculated CAGR for 1-year, 3-year, and 5-year horizons.
+Created a fund comparison table for all CAGR values.
+Implemented Sharpe ratio using Rf = 6.5%.
+Annualized Sharpe with √252.
+Computed Sortino ratio using downside volatility.
+Verified downside-only standard deviation logic.
+Performed OLS regression vs NIFTY100 returns.
+Calculated alpha as annualized intercept.
+Calculated fund beta from regression slope.
+Computed tracking error vs benchmark returns.
+Developed max drawdown calculation for each fund.
+Identified worst drawdown and peak-to-trough date range.
+Created composite fund scorecard using weighted ranks.
+Scorecard weights: 30% 3yr return, 25% Sharpe, 20% alpha.
+Scorecard also includes 15% inverse expense ratio rank.
+Scorecard uses 10% inverse max drawdown rank.
+Saved scorecard as fund_scorecard.csv.
+Saved regression metrics as alpha_beta.csv.
+Generated benchmark comparison chart PNG successfully.
+Chart compares top 5 funds vs NIFTY50 and NIFTY100.
+Ensured outputs are report-ready.
+Verified Performance_Analytics.ipynb exists.
+Verified CSV outputs exist and contain 40 funds.
+Verified benchmark chart exported to benchmark_comparison.png.
+Analytics pipeline is reproducible with build_performance_analytics.py.
+Day 4 complete and deliverables are ready for review.
+
+ask Completion Note
+Day 4 performance analytics task complete.
+Delivered:
+Performance_Analytics.ipynb
+fund_scorecard.csv
+alpha_beta.csv
+benchmark_comparison.png
+Metrics computed: daily returns, 1/3/5yr CAGR, Sharpe, Sortino, alpha, beta, max drawdown, fund scorecard.
+Benchmark comparison chart and report-ready outputs ready for review.
+
+day 5 task standup notes in other notebook in standup-notes.md
