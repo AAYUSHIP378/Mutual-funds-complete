@@ -19,3 +19,7 @@ data/processed/
 bluestock_mf.db
 figures/
 dashboard/figures/
+
+# Duplicate/old files
+sql/day2_schema.sql
+completed work update
