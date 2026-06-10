@@ -3,7 +3,16 @@ __pycache__/
 .ipynb_checkpoints/
 *.pyc
 .env
-data/raw/Bluestock_MF_Capstone_Project.csv
+
+# Large files - exclude PDFs, PPTX, etc.
+*.pdf
+*.pptx
+*.png
+*.html
+users_data.json
+
+# Raw data (large CSV files)
+data/raw/
 
 # Generated data and database
 data/processed/

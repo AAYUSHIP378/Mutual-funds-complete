@@ -148,3 +148,4 @@ All deliverables complete:
 - ✅ Final Report (PDF) and Presentation (PPTX) ready
 
 See `DAY_8_SELF_REVIEW.md` for comprehensive rubric verification and bonus challenge implementation details.
+run :  streamlit run streamlit_app.py
