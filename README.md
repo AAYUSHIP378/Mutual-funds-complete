@@ -80,36 +80,57 @@ mutual funds/
 └── .gitignore            # Git ignore rules
 ```
 
-## Quick Start
+## How to Run the Project
 
-### Run Full Pipeline (Day 1-7)
+### Step 1: Set Up Virtual Environment (Optional but Recommended)
 ```powershell
-.\.venv\Scripts\python.exe run_pipeline.py
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+.\.venv\Scripts\Activate.ps1  # For PowerShell
+# OR
+.\.venv\Scripts\activate.bat  # For Command Prompt
 ```
 
-### Run Individual Components
+### Step 2: Install Dependencies
 ```powershell
-# Day 1-2: Ingest & Clean
-.\.venv\Scripts\python.exe data_ingestion.py
-.\.venv\Scripts\python.exe data_cleaning.py
+pip install -r requirements.txt
+```
+
+### Step 3: Run the Full Pipeline (All Days 1-7)
+This script runs everything automatically:
+```powershell
+python run_pipeline.py
+```
+
+### Step 4: Run Individual Components (Optional)
+If you want to run specific days:
+```powershell
+# Day 1: Data Ingestion
+python data_ingestion.py
+
+# Day 2: Data Cleaning
+python data_cleaning.py
 
 # Day 3: Build Data Warehouse
-.\.venv\Scripts\python.exe build_data_warehouse.py
+python build_data_warehouse.py
 
 # Day 4: EDA
-.\.venv\Scripts\python.exe build_eda_notebook.py
+python build_eda_notebook.py
+python export_eda_charts.py
 
 # Day 5: Performance & Dashboard
-.\.venv\Scripts\python.exe build_performance_analytics.py
-.\.venv\Scripts\python.exe build_dashboard_reports.py
+python build_performance_analytics.py
+python build_dashboard_reports.py
 
 # Day 6: Advanced Analytics
-.\.venv\Scripts\python.exe build_advanced_analytics.py
+python build_advanced_analytics.py
 ```
 
-### Bonus Challenges (Day 8)
+### Step 5: Run Bonus Challenges
 ```powershell
-# B2: Streamlit Interactive Dashboard
+# B2: Streamlit Interactive Dashboard (opens in browser)
 streamlit run streamlit_app.py
 
 # B3: Monte Carlo 5-Year Projections
@@ -120,6 +141,9 @@ python markowitz_optimization.py
 
 # B5: Email Report Generator
 python email_report_generator.py
+
+# B1: Cron NAV Fetch (runs once, can be scheduled via Task Scheduler/cron)
+python cron_nav_fetch.py
 ```
 
 ## Inspect SQLite Database
@@ -137,25 +161,8 @@ conn.close()
 ✅ Final score: 130/150 marks
 
 See `DAY_8_SELF_REVIEW.md` and `DAY_8_COMPLETION_SUMMARY.md` for detailed rubric verification.
+For Power BI dashboard setup, see `POWER_BI_SETUP_GUIDE.md`.
 
-## Inspect SQLite Database
-
-With SQLite installed:
-
-```powershell
-sqlite3 bluestock_mf.db
-.tables
-```
-
-Or with Python:
-
-```python
-import sqlite3
-conn = sqlite3.connect('bluestock_mf.db')
-for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'"):
-    print(row[0])
-conn.close()
-```
 
 ## Project Completion
 
