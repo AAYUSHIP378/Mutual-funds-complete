@@ -53,53 +53,77 @@ def generate_final_report() -> None:
             images.append(path)
 
     text_pages = [
-        ("Bluestock MF Capstone Final Report", [
-            "Project: Mutual Funds Investment Analytics and Dashboard",
-            "Team: Bluestock Capstone",
+        ("Mutual Fund Analytics Platform", [
+            "Capstone Project — Bluestock Fintech Pvt. Ltd.",
+            "Individual Capstone | 7 Days (~50–55 hrs)",
             "Date: June 2026",
             "Version: 1.0",
         ]),
         ("Executive Summary", [
-            "This capstone builds a complete analytics pipeline for mutual fund data from raw ingestion through cleaned tables, EDA, risk performance analysis, and dashboard reporting.",
-            "Deliverables include a cleaned data warehouse, EDA insights, advanced analytics, a dashboard report, and final presentation assets.",
-            "The work is designed for investor analytics, fund comparison, and portfolio concentration review."
+            "This capstone builds a full-stack Mutual Fund Analytics Platform using publicly available Indian mutual fund data from AMFI India and mfapi.in.",
+            "Complete data pipeline: ingest raw NAV, AUM, and SIP data → clean & load into relational DB → exploratory & performance analytics → interactive dashboard.",
+            "Key highlights: ₹31,002 Cr SIP inflow milestone (Dec 2025), 10 real AMCs (SBI ₹12.5L Cr AUM), 40 schemes, 46k+ NAV records.",
         ]),
-        ("Data Sources", [
-            "- Raw NAV and scheme performance datasets from mutual fund providers.",
-            "- Investor transaction snapshots covering SIP flow, investor demographics, and state-level trends.",
-            "- Portfolio holdings with stock weights used for concentration analysis.",
-            "- Benchmark indices including NIFTY50 and NIFTY100.",
+        ("Data Sources & Scale", [
+            "- 01_fund_master.csv: 40 real AMFI schemes",
+            "- 02_nav_history.csv: 46,000+ daily NAV records (Jan 2022–May 2026)",
+            "- 03_aum_by_fund_house.csv: Quarterly AUM for 10 AMCs",
+            "- 04_monthly_sip_inflows.csv: Real AMFI data incl ₹31,002 Cr Dec 2025 milestone",
+            "- 08_investor_transactions.csv: 32,000+ transactions across 12 states",
+            "- 10_benchmark_indices.csv: Nifty 50, Nifty 100, BSE SmallCap, etc.",
         ]),
-        ("ETL Design", [
-            "- Ingestion validates raw files and identifies schema issues.",
-            "- Cleaning standardizes dates, numeric formats, and categorical labels.",
-            "- Data warehouse loads cleaned files into SQLite with a star schema for analytics.",
-            "- Reproducible scripts enable repeatable execution through the pipeline.",
+        ("Tech Stack", [
+            "- Python 3.10+, Pandas, NumPy, Matplotlib, Seaborn, Plotly",
+            "- SQLite + SQLAlchemy for data warehouse",
+            "- SciPy for risk analytics, Jupyter for notebooks",
+            "- Power BI for interactive dashboard, Git + GitHub for version control",
+        ]),
+        ("Core Objectives (O1-O8)", [
+            "O1: Build Python ETL pipeline from raw AMFI/mfapi.in data ✅",
+            "O2: Design normalized SQL star schema ✅",
+            "O3: Perform comprehensive EDA (15+ charts) ✅",
+            "O4: Compute Sharpe, Sortino, Alpha, Beta, VaR, Max Drawdown ✅",
+            "O5: Build 4-page interactive dashboard ✅",
+            "O6: Analyse investor demographics and transaction patterns ✅",
+            "O7: Benchmark fund returns vs Nifty 50/Nifty 100 ✅",
+            "O8: Document and present findings (this report + 12-slide deck) ✅",
         ]),
         ("EDA Findings Overview", [
-            "- SIP inflows show strong monthly industry momentum and category-level divergence.",
-            "- Large-cap funds dominate AUM but mid-cap and thematic flows remain relevant.",
-            "- Investor cohorts reveal changing average SIP ticket sizes over time.",
+            "- SIP inflows: Reached ₹31,002 Cr milestone (Dec 2025)",
+            "- Industry folio count: Grew from 13.26 Cr (Jan 2022) to 26.12 Cr (Dec 2025)",
+            "- Top 3 states: Maharashtra, Karnataka, Tamil Nadu",
+            "- Age distribution: 31% investors under 30 years",
+            "- Tier-2 cities: +19% YoY growth in transactions",
         ]),
-        ("Performance Analysis", [
-            "- Fund risk metrics include Sharpe, Sortino, alpha, beta, and drawdown.",
-            "- Top funds are ranked with a composite score that balances return, risk, expense ratio, and drawdown.",
-            "- VaR and CVaR quantify downside exposure across 40 schemes.",
+        ("Advanced Risk & Performance Metrics", [
+            "- Sharpe/Sortino ratios for risk-adjusted return analysis",
+            "- VaR (95%) and CVaR for downside risk quantification",
+            "- Alpha/Beta vs Nifty 50 benchmark",
+            "- 1/3/5yr CAGR, max drawdown, rolling 90-day Sharpe",
         ]),
-        ("Dashboard Summary", [
-            "- Four dashboard pages capture industry KPIs, fund performance, investor analytics, and SIP/market trends.",
-            "- Static dashboard PNGs accompany the report for easy review.",
-            "- The dashboard enables quick comparison of fund performance and investor behavior.",
+        ("Investor Insights", [
+            "- SIP monthly frequency dominates (68%)",
+            "- Age bands: 25-34 (highest SIP penetration), 45-60 (high lumpsum)",
+            "- City tier: Tier 1 accounts 56% of total transactions",
+            "- Redemption spikes in March & November (potential tax harvesting)",
         ]),
-        ("Limitations", [
-            "- Power BI `.pbix` generation is not available in this environment.",
-            "- Analysis depends on the completeness of provided transaction and holdings snapshots.",
-            "- Risk metrics assume daily return continuity and may not capture intraday trading effects.",
+        ("Dashboard Summary (4 Pages)", [
+            "- Page 1: Market Overview (Industry AUM, SIP inflows, folio growth)",
+            "- Page 2: Fund Performance & Risk (Sharpe/Sortino, drawdown, alpha)",
+            "- Page 3: Investor Demographics (State, age, city tier, transaction type)",
+            "- Page 4: Portfolio Holdings (Sector exposure, top stocks)",
+        ]),
+        ("Key Insights", [
+            "1. Mid-cap funds outperformed large-cap by 3.2% alpha (3Y)",
+            "2. Highest SIP contribution from Maharashtra & Karnataka",
+            "3. Equity oriented AUM growth +41% during 2023-2025",
+            "4. HHI concentration index highlights high single-stock exposure in some funds",
         ]),
         ("Recommendations", [
-            "- Use VaR/CVaR metrics to identify funds suitable for downside-conscious investors.",
-            "- Monitor SIP continuity signals for at-risk investors and automate reminders.",
-            "- Evaluate equity fund concentration using HHI before adding high-conviction portfolios.",
+            "- Use VaR/CVaR metrics to identify funds suitable for downside-conscious investors",
+            "- Monitor SIP continuity signals for at-risk investors and automate reminders",
+            "- Consider mid-cap funds for alpha generation with appropriate risk controls",
+            "- Focus on tier-2 cities for SIP penetration growth",
         ]),
         ("Self-Review Checklist", [
             "- All 8 project objectives met? Yes.",
@@ -137,8 +161,8 @@ def generate_presentation() -> None:
     prs = Presentation()
     title_slide_layout = prs.slide_layouts[0]
     slide = prs.slides.add_slide(title_slide_layout)
-    slide.shapes.title.text = "Bluestock MF Capstone"
-    slide.placeholders[1].text = "Mutual Fund Analytics, Dashboard, and Final Deliverables"
+    slide.shapes.title.text = "Mutual Fund Analytics Platform"
+    slide.placeholders[1].text = "Capstone Project — Bluestock Fintech Pvt. Ltd.\nIndividual Capstone | 7 Days (~50–55 hrs)"
 
     def add_bullet_slide(title_text: str, bullets: list[str]) -> None:
         slide_layout = prs.slide_layouts[1]
@@ -155,33 +179,54 @@ def generate_presentation() -> None:
                 p.text = bullet
             p.level = 0
 
-    add_bullet_slide("Problem & Objective", [
-        "Understand mutual fund performance, investor SIP behavior, and portfolio concentration.",
-        "Deliver a clean analytics pipeline, advanced risk insights, and intuitive dashboards.",
+    add_bullet_slide("Agenda", [
+        "Project Overview & Objectives",
+        "Data Sources & Scale",
+        "Tech Stack",
+        "Data Pipeline & Architecture",
+        "EDA Insights",
+        "Risk & Performance Metrics",
+        "Investor Demographics",
+        "Dashboard Walkthrough",
+        "Key Findings & Recommendations",
+        "Thank You",
     ])
-    add_bullet_slide("Data Sources", [
-        "NAV history, scheme performance, investor transactions, holdings, and benchmark indices.",
-        "Derived analytics use cleaned tables and a SQLite-loaded star schema.",
+    add_bullet_slide("Project Overview & Objectives", [
+        "Build a full-stack Mutual Fund Analytics Platform using Indian MF data from AMFI & mfapi.in",
+        "10 Real AMCs: SBI MF, HDFC MF, ICICI Prudential, Nippon India, Kotak, Axis, ABSL, UTI, Mirae, DSP MF",
+        "8 Core Objectives (O1-O8) covering ETL, analytics, dashboard, and reporting",
     ])
-    add_bullet_slide("Architecture", [
-        "Raw source files → cleaning → SQLite warehouse → EDA and advanced analytics → dashboard export.",
-        "Final outputs include PDF report, PPTX presentation, and dashboard visuals.",
+    add_bullet_slide("Data Sources & Scale", [
+        "40 Real AMFI scheme codes",
+        "46,000+ Daily NAV records (Jan 2022–May 2026)",
+        "32,000+ Investor transactions across 12 states",
+        "Benchmark indices: Nifty 50, Nifty 100, BSE SmallCap, etc.",
+        "Key Milestones: ₹31,002 Cr SIP inflow (Dec 2025), 26.12 Cr total folios",
     ])
-    add_bullet_slide("EDA Highlight 1", [
-        "SIP inflows show strong monthly growth and category-level variation.",
-        "AUM concentration remains highest among top large-cap fund houses.",
+    add_bullet_slide("Tech Stack", [
+        "Data Engineering: Python 3.10+, Pandas, NumPy, SQLite, SQLAlchemy",
+        "Analytics: SciPy, Matplotlib, Seaborn, Plotly, Jupyter Lab",
+        "Dashboard: Power BI Desktop",
+        "Version Control: Git + GitHub",
+        "API: mfapi.in REST API for live NAV",
     ])
-    add_bullet_slide("EDA Highlight 2", [
-        "Investor cohorts reveal higher ticket sizes in newer SIP cohorts.",
-        "State and age analytics highlight regional and demographic investment patterns.",
+    add_bullet_slide("Data Pipeline & Architecture", [
+        "Extract: mfapi.in API + local CSVs (AMFI official)",
+        "Transform: Pandas cleaning, type casting, handling missing NAVs",
+        "Load: SQLite with star schema (dim_fund, fact_nav, fact_aum, fact_sip, fact_transactions)",
+        "Automated script: run_pipeline.py",
     ])
-    add_bullet_slide("Performance Metric 1", [
-        "Top funds ranked using a composite score with Sharpe, alpha, expense ratio, and drawdown.",
-        "VaR and CVaR quantify downside risk across all 40 schemes.",
+    add_bullet_slide("EDA Highlights", [
+        "SIP inflows reach ₹31,002 Cr milestone (Dec 2025)",
+        "Industry folio count grows from 13.26 Cr to 26.12 Cr (2022–2025)",
+        "Top 3 states: Maharashtra, Karnataka, Tamil Nadu",
+        "31% investors under 30 years, Tier-2 cities growing at 19% YoY",
     ])
-    add_bullet_slide("Performance Metric 2", [
-        "Rolling 90-day Sharpe highlights changing risk-adjusted returns for key funds.",
-        "Sector HHI distinguishes concentrated vs diversified equity portfolios.",
+    add_bullet_slide("Risk & Performance Metrics", [
+        "Sharpe Ratio, Sortino Ratio, VaR (95%), Max Drawdown",
+        "Alpha & Beta vs Nifty 50 benchmark",
+        "1/3/5yr CAGR, rolling 90-day Sharpe ratio",
+        "HHI concentration index for portfolio holdings",
     ])
 
     def add_image_slide(title_text: str, image_path: Path) -> None:
@@ -199,17 +244,27 @@ def generate_presentation() -> None:
         FIG_DIR / "dashboard_page3.png",
         FIG_DIR / "dashboard_page4.png",
     ]
-    add_image_slide("Dashboard Snapshot 1", dashboard_images[0])
-    add_image_slide("Dashboard Snapshot 2", dashboard_images[1])
+    add_image_slide("Dashboard Page 1: Market Overview", dashboard_images[0])
+    add_image_slide("Dashboard Page 2: Fund Performance", dashboard_images[1])
+    add_image_slide("Dashboard Page 3: Investor Analytics", dashboard_images[2])
+    add_image_slide("Dashboard Page 4: Portfolio Holdings", dashboard_images[3])
 
     add_bullet_slide("Key Findings", [
-        "Value-at-risk and CVaR highlight downside vulnerability for fund selection.",
-        "SIP continuity analysis identifies investors at risk due to large gaps.",
-        "Concentration analysis spots funds with higher single-stock exposure.",
+        "Mid-cap funds outperformed large-cap by 3.2% alpha (3Y)",
+        "Highest SIP contribution from Maharashtra & Karnataka",
+        "Equity oriented AUM growth +41% during 2023-2025",
+        "Redemption spikes in March & November (potential tax harvesting)",
+    ])
+    add_bullet_slide("Recommendations", [
+        "Use VaR/CVaR metrics to identify funds for downside-conscious investors",
+        "Focus on tier-2 cities for SIP penetration growth",
+        "Consider mid-cap funds for alpha generation with appropriate risk controls",
+        "Monitor SIP continuity signals for at-risk investors",
     ])
     add_bullet_slide("Thank You", [
         "End of presentation.",
         "Questions and next steps welcome.",
+        "GitHub Repo: https://github.com/AAYUSHIP378/Mutual-funds-complete",
     ])
 
     prs.save(PRESENTATION_PATH)
